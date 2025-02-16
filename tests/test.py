@@ -30,10 +30,9 @@ if __name__ == "__main__":
         print(f"WB sources: {len(wb_sources)}")
         print(f"WB indicators: {len(wb_indicators)}")
         
-        countries = ['USA', 'BRA']
-        indicators = ['NY.GDP.MKTP.CD', 'FP.CPI.TOTL.ZG']
-
-        start_date = 2018
+        countries = ['USA', 'CHN']
+        indicators = ['NY.GDP.MKTP.CD']
+        start_date = 2020
         end_date = 2020
         
         data = gdi.wb.data(countries, indicators, start_date, end_date)

@@ -185,7 +185,7 @@ class WBClient(BaseClient):
             print('WB Regions - Something went wrong.')
             return []
         
-    def economies(self) -> List[WBEconomy]:
+    def economies(self, region=None, income_level=None, lending_type=None) -> List[WBEconomy]:
         '''
         Retrieves a list of available WB economies.
         
@@ -194,6 +194,12 @@ class WBClient(BaseClient):
         
         path_segments = ['/country']
         query_parameters = {'format': 'json', 'per_page': '1000'}
+        if region is not None:
+            query_parameters['region'] = region
+        if income_level is not None:
+            query_parameters['income_level'] = income_level
+        if lending_type is not None:
+            query_parameters['lending_type'] = lending_type
         url = self._construct_url(self.BASE_URL, path_segments, query_parameters)
         
         try:
@@ -334,13 +340,22 @@ class WBClient(BaseClient):
         indicator_codes = ';'.join(indicators)
 
         # Construct the URL for the time series data
-        url = f'{self.BASE_URL}/country/{country_codes}/indicator/{indicator_codes}'
-        url = self._add_query_parameters(url, {
+        # url = f'{self.BASE_URL}/country/{country_codes}/indicator/{indicator_codes}'
+        # url = self._add_query_parameters(url, {
+        #     'date': f'{start_date}:{end_date}',
+        #     'format': 'json',
+        #     'frequency': frequency,
+        #     'per_page': '1000'
+        # })
+        
+        query_parameters = {
             'date': f'{start_date}:{end_date}',
             'format': 'json',
             'frequency': frequency,
             'per_page': '1000'
-        })
+        }
+        
+        url = self._construct_url(self.BASE_URL, ['country', country_codes, 'indicator', indicator_codes],  query_parameters)
         
         page = 1
         all_data_points = []

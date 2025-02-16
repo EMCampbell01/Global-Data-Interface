@@ -26,16 +26,19 @@ class BaseClient(ABC):
     @staticmethod
     def _add_path_segments(url_base: str, path_segments: List[str]):
         # Normalize the base URL by ensuring it ends with a slash
+        for s in path_segments:
+            print('segment:', s)
         if not url_base.endswith('/'):
             url_base += '/'
 
         # Concatenate all path segments
         url = url_base + '/'.join(path_segments)
+        print('product (add segments):', url)
         return url
     
     @staticmethod
     def _add_query_parameters(url: str, query_parameters: dict) -> str:
-        """Adds query parameters to a URL, handling parameters safely.
+        """Adds query parameters to a URL, handling parameters safely without using urllib.
 
         Args:
             url (str): The base URL or existing path.
@@ -44,19 +47,35 @@ class BaseClient(ABC):
         Returns:
             str: The updated URL with the new query parameters.
         """
+        print("initial url:", url)
+        
         # Filter out parameters with None values
         filtered_params = {k: v for k, v in query_parameters.items() if v is not None}
         
-        # Parse the existing URL to check for existing query parameters
-        parsed_url = urlparse(url)
-        existing_params = parse_qs(parsed_url.query)
+        # Split the URL into its components (scheme, base, path, query string)
+        base_url, *query_parts = url.split('?')
+        existing_params = {}
+        
+        if query_parts:
+            # Parse existing query parameters if present
+            existing_query_string = query_parts[0]
+            existing_params = dict(item.split('=') for item in existing_query_string.split('&') if '=' in item)
         
         # Add the new parameters to the existing ones
         existing_params.update(filtered_params)
         
-        # Rebuild the URL with the updated query string
-        query_string = urlencode(existing_params, doseq=True)
-        return f"{parsed_url.scheme}://{parsed_url.netloc}{parsed_url.path}?{query_string}"
+        # Build the new query string
+        query_string = '&'.join([f"{k}={v}" for k, v in existing_params.items()])
+        
+        # If there are any query parameters, append them to the base URL
+        if query_string:
+            product_url = f"{base_url}?{query_string}"
+        else:
+            product_url = base_url
+        
+        print('product url (add queries):', product_url)
+        return product_url
+
     
     def _request(self, method: str, url: str, payload=None) -> requests.Response:
         try:

@@ -13,19 +13,16 @@ Global Data Interface is a Python package designed to provide a unified interfac
 - [Usage](#Usage)
 - [Design](#design)
 
----
-
 ## Installation
 
 Avaliable on Pypi:
+
 https://pypi.org/project/Global-Data-Interface/
 
 Download via pip:
 ```bash
 pip install Global-Data-Interface
 ```
-
----
 
 ## Usage
 
@@ -35,22 +32,57 @@ pip install Global-Data-Interface
 
 **World Bank Data**
 
-Retrieving WB Indicators:
+The `WBClient` is an attribute of `GlobalDataClient` and can be used individually to retrive WB specific data.
+```python
+
+```
+
+Retrive WB Indicators:
 ```python
 from global_data_interface import GlobalDataInterface
 
 gdi = GlobalDataInterface()
-wb_indicators = gdi.wb.indicators()
 
-print(f'WB Indicator Count: {len(wb_indicators)}')
-print(wb_indicators[0])
+wb_indicators = gdi.wb.indicators()
+print(f'WB Indicator Count: {len(wb_indicators)}\n{wb_indicators[0]}')
 ```
 ```
 WB Indicator Count: 24604
 {'id': '1.0.HCount.1.90usd', 'name': 'Poverty Headcount ($1.90 a day)', 'unit': '', 'source': {'id': '37', 'value': 'LAC Equity Lab'}, 'sourceNote': 'The poverty headcount index measures the proportion of the population with daily per capita income (in 2011 PPP) below the poverty line.', 'sourceOrganization': 'LAC Equity Lab tabulations of SEDLAC (CEDLAS and the World Bank).', 'topics': [{'id': '11', 'value': 'Poverty '}]}
 ```
 
----
+Retrive WB economies in the EU area:
+```python
+from global_data_interface import GlobalDataInterface
+
+gdi = GlobalDataInterface()
+
+wb_euro_area_economies = gdi.wb.economies(region='EMU')
+print(f'{wb_east_asian_economies[0]}')
+```
+```
+{'id': 'AUT', 'iso2code': None, 'name': 'Austria', 'region': {'id': 'ECS', 'iso2code': 'Z7', 'value': 'Europe & Central Asia'}, 'adminRegion': None, 'incomeLevel': {'id': 'HIC', 'iso2code': 'XD', 'value': 'High income'}, 'lendingType': {'id': 'LNX', 'iso2code': 'XX', 'value': 'Not classified'}, 'capitalCity': 'Vienna', 'longitude': '16.3798', 'latitude': '48.2201'}
+```
+
+Retrive WB GDP for 2020 from the United States and China:
+```python
+from global_data_interface import GlobalDataInterface
+
+gdi = GlobalDataInterface()
+
+countries = ['USA', 'CHN']
+indicators = ['NY.GDP.MKTP.CD']
+start_date = 2022
+end_date = 2022
+
+data = gdi.wb.data(countries, indicators, start_date, end_date)
+for data_point in data:
+    print(data_point)
+```
+```
+{'country': 'China', 'country_id': 'CN', 'countryiso3code': 'CHN', 'indicator': 'GDP (current US$)', 'date': '2022', 'value': 17881782683707.3, 'unit': '', 'obs_status': '', 'decimal': 0}
+{'country': 'United States', 'country_id': 'US', 'countryiso3code': 'USA', 'indicator': 'GDP (current US$)', 'date': '2022', 'value': 26006893000000, 'unit': '', 'obs_status': '', 'decimal': 0}
+```
 
 ## Design
 
