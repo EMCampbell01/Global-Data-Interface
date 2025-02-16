@@ -24,13 +24,15 @@ Download via pip:
 pip install Global-Data-Interface
 ```
 
-## Usage
+---
 
-### Global Data
+# Usage
 
-### API Specific Data 
+## Global Data
 
-**World Bank Data**
+## API Specific Data 
+
+### World Bank Data
 
 The `WBClient` is an attribute of `GlobalDataClient` and can be used individually to retrive WB specific data.
 
@@ -79,9 +81,11 @@ for data_point in data:
 {'country': 'United States', 'country_id': 'US', 'countryiso3code': 'USA', 'indicator': 'GDP (current US$)', 'date': '2022', 'value': 26006893000000, 'unit': '', 'obs_status': '', 'decimal': 0}
 ```
 
-## Design
+---
 
-### Global Data Interface
+# Design
+
+## Global Data Interface
 
 The `GlobalDataInterface` class is the main interface for the package. It is a singleton class. The `GlobalDataInterface` contains several sub-clients which each interact with and retrive data from their associated API. A `GlobalDataInterface` object can be used to interact with each of its internal sub-clients individually to create API specific requests and retrive API specific data.
 
@@ -93,7 +97,7 @@ The `GlobalDataInterface` has the following methods to retrive data from multipl
 - `economy_groups()`
 - `data()`
 
-### Sub-Clients
+## Sub-Clients
 
 In its current version `GlobalDataInterface` has 4 sub-clients for the following organizations and their APIs:
 
@@ -147,5 +151,5 @@ The IMF Client provides methods for retreving data from the IMF datamapper V1 AP
 
 The UN Client is still to be implemented.
 
-### Data-Structures
+## Data-Structures
 
