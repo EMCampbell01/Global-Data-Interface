@@ -11,7 +11,7 @@ Global Data Interface is a Python package designed to provide a unified interfac
 - [Usage](#Usage)
     - [Global Data](#global-data)
     - [World Bank Data](#world-bank-data)
-- [Design](#design)
+- [Package Design](#design)
     - [Global Data Interface](#global-data-interface-1)
     - [Sub-Clients](#sub-clients)
     - [Data-Structures](#data-structures)
@@ -37,7 +37,9 @@ pip install Global-Data-Interface
 
 ### World Bank Data
 
-The `WBClient` is an attribute of `GlobalDataClient` and can be used individually to retrive WB specific data.
+The `WBClient` can be used individually to retrive WB specific data. 
+
+**Examples:**
 
 Retrive WB Indicators:
 ```python
@@ -52,6 +54,7 @@ WB Indicator Count: 24604
 {'id': '1.0.HCount.1.90usd', 'name': 'Poverty Headcount ($1.90 a day)', 'unit': '', 'source': {'id': '37', 'value': 'LAC Equity Lab'}, 'sourceNote': 'The poverty headcount index measures the proportion of the population with daily per capita income (in 2011 PPP) below the poverty line.', 'sourceOrganization': 'LAC Equity Lab tabulations of SEDLAC (CEDLAS and the World Bank).', 'topics': [{'id': '11', 'value': 'Poverty '}]}
 ```
 
+
 Retrive WB economies in the EU area:
 ```python
 from global_data_interface import GlobalDataInterface
@@ -63,6 +66,7 @@ print(f'{wb_euro_area_economies[0]}')
 ```
 {'id': 'AUT', 'iso2code': None, 'name': 'Austria', 'region': {'id': 'ECS', 'iso2code': 'Z7', 'value': 'Europe & Central Asia'}, 'adminRegion': None, 'incomeLevel': {'id': 'HIC', 'iso2code': 'XD', 'value': 'High income'}, 'lendingType': {'id': 'LNX', 'iso2code': 'XX', 'value': 'Not classified'}, 'capitalCity': 'Vienna', 'longitude': '16.3798', 'latitude': '48.2201'}
 ```
+
 
 Retrive WB GDP for 2020 from the United States and China:
 ```python
@@ -82,6 +86,25 @@ for data_point in data:
 ```
 {'country': 'China', 'country_id': 'CN', 'countryiso3code': 'CHN', 'indicator': 'GDP (current US$)', 'date': '2022', 'value': 17881782683707.3, 'unit': '', 'obs_status': '', 'decimal': 0}
 {'country': 'United States', 'country_id': 'US', 'countryiso3code': 'USA', 'indicator': 'GDP (current US$)', 'date': '2022', 'value': 26006893000000, 'unit': '', 'obs_status': '', 'decimal': 0}
+```
+
+### International Monetary Fund Data
+
+The `IMFClient` can be used individually to retrive IMF specific data. 
+
+**Examples:**
+
+Retrive IMF Indicators:
+```python
+from global_data_interface import GlobalDataInterface
+
+gdi = GlobalDataInterface()
+
+imf_indicators = gdi.imf.indicators()
+print(f'IMF Indicator Count: {len(imf_indicators)}\n{imf_indicators[-1]}')
+```
+```
+{'code': 'RE', 'label': 'Regulation and Ethics', 'description': 'Regulation and Ethics', 'source': 'AI Preparedness Index - April 2024', 'unit': 'Index', 'dataset': 'AIPI'}
 ```
 
 ---
