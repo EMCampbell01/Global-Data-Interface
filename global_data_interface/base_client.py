@@ -29,13 +29,9 @@ class BaseClient(ABC):
         if not url_base.endswith('/'):
             url_base += '/'
 
-        # Use urljoin to add each path segment properly
-        for segment in path_segments:
-            # Ensure the segment doesn't start with a slash
-            segment = segment.lstrip('/')
-            url_base = urljoin(url_base, segment)
-        
-        return url_base
+        # Concatenate all path segments
+        url = url_base + '/'.join(path_segments)
+        return url
     
     @staticmethod
     def _add_query_parameters(url: str, query_parameters: dict) -> str:

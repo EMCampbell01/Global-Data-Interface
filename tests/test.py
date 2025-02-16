@@ -17,22 +17,28 @@ if __name__ == "__main__":
         gdi.wb.info()
         
         wb_indicators = gdi.wb.indicators()
+        wb_economies = gdi.wb.economies()
+        wb_regions = gdi.wb.regions()
+        wb_topics = gdi.wb.topics()
+        wb_income_levels = gdi.wb.income_levels()
+        wb_sources = gdi.wb.sources()
         
-        # wb_economies = client.wb.economies()
+        print(f"WB regions: {len(wb_regions)}")
+        print(f"WB economies: {len(wb_economies)}")
+        print(f"WB topics: {len(wb_topics)}")
+        print(f"WB income levels: {len(wb_income_levels)}")
+        print(f"WB sources: {len(wb_sources)}")
+        print(f"WB indicators: {len(wb_indicators)}")
         
-        # wb_regions = client.wb.regions()
-        # wb_topics = client.wb.topics()
-        # wb_income_levels = client.wb.income_levels()
-        # wb_sources = client.wb.sources()
+        countries = ['USA', 'BRA']
+        indicators = ['NY.GDP.MKTP.CD', 'FP.CPI.TOTL.ZG']
+
+        start_date = 2018
+        end_date = 2020
         
-        # # data = client.wb.data()
-        
-        # print(f"Number of WB regions: {len(wb_regions)}")
-        # print(f"Number of WB economies: {len(wb_economies)}")
-        # print(f"Number of WB topics: {len(wb_topics)}")
-        # print(f"Number of WB income levels: {len(wb_income_levels)}")
-        # print(f"Number of WB sources: {len(wb_sources)}")
-        print(f"Number of WB indicators: {len(wb_indicators)}")
+        data = gdi.wb.data(countries, indicators, start_date, end_date)
+        for i in data:
+            print(i)
         
     if test_imf_client:
         
@@ -42,13 +48,22 @@ if __name__ == "__main__":
         imf_groups = gdi.imf.groups()
         imf_regions = gdi.imf.regions()
         
-        imf_data = gdi.imf.data()
-        
-        
         print(f"Number of IMF countries: {len(imf_countries)}")
         print(f"Number of IMF groups: {len(imf_groups)}")
         print(f"Number of IMF regions: {len(imf_regions)}")
         print(f"Number of IMF indicators: {len(imf_indicators)}")
+
+        print(imf_countries[0], imf_countries[1], imf_countries[2])
+        print(imf_indicators[0], imf_indicators[1], imf_indicators[2])
+
+        countries = ['USA', 'BRA']
+        indicator = 'NGDPD'
+        years = ['2015', '2016', '2017']
+        
+        data = gdi.imf.data(indicator, countries=countries, years=years)
+        print(f'Data: {data}')
+        for i in data:
+            print(i)
         
     if test_wto_client:
         
@@ -62,7 +77,7 @@ if __name__ == "__main__":
         wto_products_and_sectors = gdi.wto.products_and_sectors()
         wto_units = gdi.wto.units()
         
-        # data = gdi.wto.data()
+        data = gdi.wto.data()
         
     if test_global_interface:
         

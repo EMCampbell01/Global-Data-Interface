@@ -1,19 +1,9 @@
+from global_data_interface.base_data_class import BaseDataClass
 from global_data_interface.base_client import BaseClient
+from global_data_interface import GlobalEconomy, GlobalIndicator
 from dataclasses import asdict, dataclass
-from urllib.parse import urlencode, urljoin
-import requests
 from typing import List
 
-from global_data_interface.base_data_class import BaseDataClass
-from global_data_interface.global_data_class import GlobalEconomy, GlobalIndicator
-
-
-
-
-# https://www.imf.org/external/datamapper/api/v1/indicators
-# https://www.imf.org/external/datamapper/api/v1/countries
-# https://www.imf.org/external/datamapper/api/v1/regions
-# https://www.imf.org/external/datamapper/api/v1/groups
 
 class IMFAPIError(Exception):
     '''Custom exception for WTO API errors.'''
@@ -28,7 +18,7 @@ class IMFTimeseriesDatapoint:
     value: float
 
     def __str__(self):
-            return (f'{self.area_code}, {self.indicator_code}, {self.year}, {self.value}')
+        return (str(self.to_dict()))
     
     def to_dict(self):
         return asdict(self)
@@ -131,7 +121,10 @@ class IMFClient(BaseClient):
             path_segments += regions
         if groups:
             path_segments += groups
+        print(f"Path segments: {path_segments}")
         url = self._add_path_segments(self.BASE_URL, path_segments)
+        
+        print("URL: ", url)
 
         try:
             response = self._get(url)
