@@ -53,7 +53,7 @@ from global_data_interface import GlobalDataInterface
 
 gdi = GlobalDataInterface()
 wb_euro_area_economies = gdi.wb.economies(region='EMU')
-print(f'{wb_east_asian_economies[0]}')
+print(f'{wb_euro_area_economies[0]}')
 ```
 ```
 {'id': 'AUT', 'iso2code': None, 'name': 'Austria', 'region': {'id': 'ECS', 'iso2code': 'Z7', 'value': 'Europe & Central Asia'}, 'adminRegion': None, 'incomeLevel': {'id': 'HIC', 'iso2code': 'XD', 'value': 'High income'}, 'lendingType': {'id': 'LNX', 'iso2code': 'XX', 'value': 'Not classified'}, 'capitalCity': 'Vienna', 'longitude': '16.3798', 'latitude': '48.2201'}
