@@ -12,9 +12,9 @@ Global Data Interface is a Python package designed to provide a unified interfac
     - [Global Data](#global-data)
     - [World Bank Data](#world-bank-data)
 - [Design](#design)
-    -[Global Data Interface](#global-data-interface-1)
-    -[Sub-Clients](#sub-clients)
-    -[Data-Structures](#data-structures)
+    - [Global Data Interface](#global-data-interface-1)
+    - [Sub-Clients](#sub-clients)
+    - [Data-Structures](#data-structures)
 
 ## Installation
 
