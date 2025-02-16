@@ -33,16 +33,12 @@ pip install Global-Data-Interface
 **World Bank Data**
 
 The `WBClient` is an attribute of `GlobalDataClient` and can be used individually to retrive WB specific data.
-```python
-
-```
 
 Retrive WB Indicators:
 ```python
 from global_data_interface import GlobalDataInterface
 
 gdi = GlobalDataInterface()
-
 wb_indicators = gdi.wb.indicators()
 print(f'WB Indicator Count: {len(wb_indicators)}\n{wb_indicators[0]}')
 ```
@@ -56,7 +52,6 @@ Retrive WB economies in the EU area:
 from global_data_interface import GlobalDataInterface
 
 gdi = GlobalDataInterface()
-
 wb_euro_area_economies = gdi.wb.economies(region='EMU')
 print(f'{wb_east_asian_economies[0]}')
 ```
