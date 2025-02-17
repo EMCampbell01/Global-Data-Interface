@@ -39,6 +39,12 @@ class WTOProduct:
     def to_dict(self):
         return asdict(self)
 
+@dataclass
+class WTOEconomicGroup(BaseDataClass):
+    
+    code: str
+    name: str
+    displayOrder: int
 
 @dataclass
 class WTOTimeseriesDatapoint:
@@ -224,7 +230,9 @@ class WTOClient(BaseClient):
         }.items() if value is not None}
         
         try:
+            print(f'url: {url}')
             response = self._post(url, payload)
+            print(f'response: {response}')
             data = response.json()
         except WTOAPIError as e:
             print(f"Error fetching timeseries datapoints for indicator {i}: {e}")
@@ -412,8 +420,27 @@ class WTOClient(BaseClient):
             for region in data
         ]
     
-    def economic_groups(self):
-        pass
+    def economic_groups(self, lang=None):
+        
+        query_parameters = {'lang': lang} if lang else {}
+        path_segments = ['territory', 'groups']
+        url = self._construct_url(self.BASE_URL, path_segments, query_parameters)
+        
+        try:
+            response = self._get(url)
+            data = response.json()
+        except WTOAPIError as e:
+            print(f"Error fetching geographical regions: {e}")
+            return []
+        
+        return [
+            WTOEconomicGroup(
+                code=group.get("code"),
+                name=group.get("name"),
+                displayOrder=group.get("displayOrder")
+            )
+            for group in data
+        ]
     
     def economies(self, name=None, ig=None, reg=None, gp=None, lang=None):
         
@@ -429,6 +456,7 @@ class WTOClient(BaseClient):
         
         try:
             response = self._get(url)
+            print(response)
             data = response.json() 
         except WTOAPIError as e:
             print(f"Error fetching reporting economies: {e}")

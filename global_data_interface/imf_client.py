@@ -124,6 +124,10 @@ class IMFClient(BaseClient):
         print(f"Path segments: {path_segments}")
         url = self._add_path_segments(self.BASE_URL, path_segments)
         
+        if years:
+            years = ','.join(years)
+            url = self._add_query_parameters(url, {'periods': years})
+        
         print("URL: ", url)
 
         try:

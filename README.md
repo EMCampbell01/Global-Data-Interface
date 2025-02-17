@@ -9,8 +9,11 @@ Global Data Interface is a Python package designed to provide a unified interfac
 
 - [Installation](#Installation)
 - [Usage](#Usage)
-    - [Global Data](#global-data)
     - [World Bank Data](#world-bank-data)
+    - [International Monetary Fund Data](#international-monetary-fund-data)
+    - [World Trade Organization Data](#world-trade-organization-data)
+    - [United Nations Data](#united-nations-data)
+    - [Global Data](#global-data)
 - [Package Design](#design)
     - [Global Data Interface](#global-data-interface-1)
     - [Sub-Clients](#sub-clients)
@@ -30,8 +33,6 @@ pip install Global-Data-Interface
 ---
 
 # Usage
-
-## Global Data
 
 ## API Specific Data 
 
@@ -101,11 +102,62 @@ from global_data_interface import GlobalDataInterface
 gdi = GlobalDataInterface()
 
 imf_indicators = gdi.imf.indicators()
-print(f'IMF Indicator Count: {len(imf_indicators)}\n{imf_indicators[-1]}')
+print(f'IMF Indicator Count: {len(imf_indicators)}\n{imf_indicators[0]}')
 ```
 ```
-{'code': 'RE', 'label': 'Regulation and Ethics', 'description': 'Regulation and Ethics', 'source': 'AI Preparedness Index - April 2024', 'unit': 'Index', 'dataset': 'AIPI'}
+{'code': 'NGDP_RPCH', 'label': 'Real GDP growth', 'description': "Gross domestic product is the most commonly used single measure of a country's overall economic activity. It represents the total value at constant prices of final goods and services produced within a country during a specified time period, such as one year.", 'source': 'World Economic Outlook (October 2024)', 'unit': 'Annual percent change', 'dataset': 'WEO'}
 ```
+
+Retrive government expenditure as a percent of GDP for the UK in 2010 and 2020:
+```python
+from global_data_interface import GlobalDataInterface
+
+gdi = GlobalDataInterface()
+
+data = gdi.imf.data('exp', countries=['GBR'], years=['2010', '2020'])
+print(f'{data[0]}\n{data[1]}')
+```
+```
+{'area_code': 'GBR', 'indicator_code': 'exp', 'year': 2010, 'value': 50.562698364258}
+{'area_code': 'GBR', 'indicator_code': 'exp', 'year': 2020, 'value': 49.866941221865}
+```
+
+### World Trade Organization Data
+
+The `WTOClient` can be used individually to retrive WTO specific data. 
+
+Retrive WTO economic groups:
+```python
+from global_data_interface import GlobalDataInterface
+
+gdi = GlobalDataInterface()
+
+wto_economic_groups = gdi.wto.economic_groups()
+print(wto_economic_groups[9])
+```
+```
+{'code': '918', 'name': 'European Union', 'displayOrder': 1240}
+```
+
+Retrive WTO economies in the EU economic group:
+```python
+from global_data_interface import GlobalDataInterface
+
+gdi = GlobalDataInterface()
+
+wto_eu_economies = gdi.wto.economies(gp='918')
+print(wto_eu_economies[0])
+```
+```
+{'code': '040', 'iso3A': 'AUT', 'name': 'Austria', 'displayOrder': 220}
+```
+
+### United Nations Data
+
+The UN Client is still to be fully implemented.
+
+## Global Data
+
 
 ---
 
@@ -175,7 +227,7 @@ The IMF Client provides methods for retreving data from the IMF datamapper V1 AP
 
 **United Nations Client**
 
-The UN Client is still to be implemented.
+The UN Client is still to be fully implemented.
 
 ## Data-Structures
 
