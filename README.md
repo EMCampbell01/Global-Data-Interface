@@ -5,6 +5,10 @@
 
 Global Data Interface is a Python package designed to provide a unified interface to easily query for data from a number of APIs providing international time series data.
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/f1d119c2-22cf-4397-9da6-0bce78782b9c" alt="Global Data Interface Image"/>
+</p>
+
 ## README Contents
 
 - [Installation](#Installation)
@@ -89,6 +93,7 @@ for data_point in data:
 {'country': 'United States', 'country_id': 'US', 'countryiso3code': 'USA', 'indicator': 'GDP (current US$)', 'date': '2022', 'value': 26006893000000, 'unit': '', 'obs_status': '', 'decimal': 0}
 ```
 
+
 ### International Monetary Fund Data
 
 The `IMFClient` can be used individually to retrive IMF specific data. 
@@ -108,6 +113,7 @@ print(f'IMF Indicator Count: {len(imf_indicators)}\n{imf_indicators[0]}')
 {'code': 'NGDP_RPCH', 'label': 'Real GDP growth', 'description': "Gross domestic product is the most commonly used single measure of a country's overall economic activity. It represents the total value at constant prices of final goods and services produced within a country during a specified time period, such as one year.", 'source': 'World Economic Outlook (October 2024)', 'unit': 'Annual percent change', 'dataset': 'WEO'}
 ```
 
+
 Retrive government expenditure as a percent of GDP for the UK in 2010 and 2020:
 ```python
 from global_data_interface import GlobalDataInterface
@@ -121,6 +127,7 @@ print(f'{data[0]}\n{data[1]}')
 {'area_code': 'GBR', 'indicator_code': 'exp', 'year': 2010, 'value': 50.562698364258}
 {'area_code': 'GBR', 'indicator_code': 'exp', 'year': 2020, 'value': 49.866941221865}
 ```
+
 
 ### World Trade Organization Data
 
@@ -141,6 +148,7 @@ print(wto_economic_groups[9])
 {'code': '918', 'name': 'European Union', 'displayOrder': 1240}
 ```
 
+
 Retrive WTO economies in the EU economic group:
 ```python
 from global_data_interface import GlobalDataInterface
@@ -155,13 +163,13 @@ print(wto_eu_economies[0])
 ```
 
 
-
 ### United Nations Data
 
 The UN Client is still to be fully implemented.
 
 ## Global Data
 
+The `GlobalDataInterface` to query for data from across all sub-clients.
 
 ---
 
@@ -188,9 +196,9 @@ In its current version `GlobalDataInterface` has 4 sub-clients for the following
 - `WTOClient`
 - `IMFClient`
 
-these all inheriate from the `BaseClient` abstract class. The `BaseClient` contains internal utility methods for url construction and making REST HTTP requests. The `BaseClient` contains an abstract method `info()` which is implemented in child classes to print details om the specific API being interacted with, including the organization providing it and a link to its documentation.
+these all inheriate from the `BaseClient` abstract class.
 
-**World Bank Client**
+### World Bank Client
 
 The WB client provides methods for retreiving data from the WB V2 API endpoints.
 
@@ -202,7 +210,7 @@ The WB client provides methods for retreiving data from the WB V2 API endpoints.
 - `income_levels()`
 - `data()`
 
-**World Trade Organization Client**
+### World Trade Organization Client
 
 The WTO Client provides methods for retreving data from the WTO timeseries V1 API endpoints.
 
@@ -219,7 +227,7 @@ The WTO Client provides methods for retreving data from the WTO timeseries V1 AP
 - `frequencies()`
 - `data()`
 
-**International Monetary Fund Client**
+### International Monetary Fund Client
 
 The IMF Client provides methods for retreving data from the IMF datamapper V1 API endpoints.
 
@@ -229,9 +237,22 @@ The IMF Client provides methods for retreving data from the IMF datamapper V1 AP
 - `groups()`
 - `data()`
 
-**United Nations Client**
+### United Nations Client
 
 The UN Client is still to be fully implemented.
 
+## Base Client
+
+The `BaseClient` contains internal utility methods for url construction and making REST HTTP requests. The `BaseClient` contains an abstract method `info()` which is implemented in child classes to print details om the specific API being interacted with, including the organization providing it and a link to its documentation. All API specific sub-clients inheriate from `BaseClient`
+
+- `info()`
+- `_construct_url()`
+- `_add_path_segments()`
+- `_add_query_parameters()`
+- `_request()`
+- `_get()`
+- `_post()`
+
 ## Data-Structures
 
+Data returned by sub-clients is returned as Dataclass classes that mirror the structure of the JSON data returned by its API. These API specific data classes inheriate from the `BaseDataClass` dataclass which contains methods `to_dict` and a `__str__` dunder method which prints the object as a dict.
