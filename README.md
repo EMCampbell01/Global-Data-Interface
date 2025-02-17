@@ -126,6 +126,8 @@ print(f'{data[0]}\n{data[1]}')
 
 The `WTOClient` can be used individually to retrive WTO specific data. 
 
+**Examples:**
+
 Retrive WTO economic groups:
 ```python
 from global_data_interface import GlobalDataInterface
@@ -151,6 +153,8 @@ print(wto_eu_economies[0])
 ```
 {'code': '040', 'iso3A': 'AUT', 'name': 'Austria', 'displayOrder': 220}
 ```
+
+
 
 ### United Nations Data
 
