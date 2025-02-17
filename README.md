@@ -6,7 +6,7 @@
 Global Data Interface is a Python package designed to provide a unified interface to easily query for data from a number of APIs providing international time series data.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/f1d119c2-22cf-4397-9da6-0bce78782b9c" alt="Global Data Interface Image"/>
+  <img src="https://github.com/user-attachments/assets/ce53da6b-8a14-488e-a8f9-e72280637bd2" alt="Global Data Interface Image"/>
 </p>
 
 ## README Contents
